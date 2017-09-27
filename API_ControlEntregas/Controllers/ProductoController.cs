@@ -57,7 +57,7 @@ namespace API_ControlEntregas.Controllers
                 {
                     ProductoModel model = new ProductoModel();
                     data.idCliente = idCliente;
-                    await model.Insert(data);
+                    data.idProducto = await model.Insert(data); //return productID
                     return Request.CreateResponse(HttpStatusCode.Created, data);
                 }
             }

@@ -87,7 +87,7 @@ namespace API_ControlEntregas.Controllers
                 {
                     OrdenEntregaModel model = new OrdenEntregaModel();
                     data.idCliente = idCliente;
-                    await model.Insert(data);
+                    data.idOrdenEntrega = await model.Insert(data); //return IDOrdenEntrega
                     return Request.CreateResponse(HttpStatusCode.Created, data);
                 }
             }

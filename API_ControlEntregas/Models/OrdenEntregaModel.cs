@@ -59,16 +59,20 @@ namespace API_ControlEntregas.Models
             }
         }
 
-        public async Task Insert(OrdenEntrega data)
+        public async Task<Int64> Insert(OrdenEntrega data)
         {
             try
             {
-                String query = String.Format(@"INSERT INTO OrdenesEntrega 
-                                               (IDCliente, Descripcion)
-                                                VALUES
-                                                ({0}, '{1}')", data.idCliente, data.descripcion);
+                String query = String.Format(@"EXEC xsp_InsertDeliveryOrder
+                                               {0}, '{1}', '{2}'", data.idCliente, data.descripcion, data.shipperID);
                 DataBaseSettings db = new DataBaseSettings();
-                await db.ExecuteQuery(query);
+                DataTable aux = await db.GetDataTable(query);
+                if(aux.Rows.Count > 0)
+                {
+                    return Convert.ToInt64(aux.Rows[0]["IDOrdenEntrega"].ToString());
+                }
+
+                throw new Exception("Orden de entrega existente");
             }
             catch (Exception ex)
             {
@@ -114,6 +118,7 @@ namespace API_ControlEntregas.Models
         public Int64 ?idOrdenEntrega;
         public Int64 ?idCliente;
         public String descripcion;
+        public String shipperID;
         public DateTime creadoEn;
 
         public OrdenEntrega()

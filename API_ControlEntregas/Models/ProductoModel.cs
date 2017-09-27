@@ -34,16 +34,21 @@ namespace API_ControlEntregas.Models
             }
         }
 
-        public async Task Insert(Producto data)
+        public async Task<Int64> Insert(Producto data)
         {
             try
             {
-                String query = String.Format(@"INSERT INTO Productos 
-                                               (IDCliente, IDParaEmpresa, Descripcion)
-                                                VALUES
-                                                ({0}, '{1}', '{2}')", data.idCliente, data.idParaEmpresa, data.descripcion);
+                String query = String.Format(@"EXEC xsp_InsertProducts
+                                                {0}, '{1}', '{2}'", data.idCliente, data.idParaEmpresa, data.descripcion);
                 DataBaseSettings db = new DataBaseSettings();
-                await db.ExecuteQuery(query);
+                DataTable aux = await db.GetDataTable(query);
+
+                if(aux.Rows.Count > 0)
+                {
+                    return Convert.ToInt64(aux.Rows[0]["IDProducto"].ToString());
+                }
+
+                throw new Exception("Producto existente");
             }
             catch (Exception ex)
             {
