@@ -72,7 +72,7 @@ namespace API_ControlEntregas.Models
                     return Convert.ToInt64(aux.Rows[0]["IDOrdenEntrega"].ToString());
                 }
 
-                throw new Exception("Orden de entrega existente");
+                return 0;
             }
             catch (Exception ex)
             {
@@ -99,10 +99,8 @@ namespace API_ControlEntregas.Models
         {
             try
             {
-                String query = String.Format(@"INSERT INTO Productos_OrdenesEntrega
-                                              (IDProducto, IDOrdenEntrega, Cantidad)
-                                               VALUES
-                                                ({0}, {1}, {2})", data.idProducto, data.idOrdenEntrega, data.cantidad);
+                String query = String.Format(@" xsp_InsertProducts_DeliveryOrder
+                                                {0}, {1}, {2}", data.idProducto, data.idOrdenEntrega, data.cantidad);
                 DataBaseSettings db = new DataBaseSettings();
                 await db.ExecuteQuery(query);
             }

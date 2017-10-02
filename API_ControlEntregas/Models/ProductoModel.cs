@@ -48,7 +48,8 @@ namespace API_ControlEntregas.Models
                     return Convert.ToInt64(aux.Rows[0]["IDProducto"].ToString());
                 }
 
-                throw new Exception("Producto existente");
+                return 0;
+
             }
             catch (Exception ex)
             {
