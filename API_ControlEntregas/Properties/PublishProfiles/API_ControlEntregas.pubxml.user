@@ -79,7 +79,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 07:43:40</publishTime>
     </File>
     <File Include="bin/API_ControlEntregas.dll">
-      <publishTime>09/27/2017 17:44:10</publishTime>
+      <publishTime>10/16/2017 12:51:38</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>05/29/2017 15:39:57</publishTime>

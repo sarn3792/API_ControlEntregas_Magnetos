@@ -44,15 +44,15 @@ namespace API_ControlEntregas.Controllers
         }
 
         [HttpGet]
-        [Route("api/Clientes/{idCliente}/OrdenesEntrega/{idOrdenEntrega}")]
-        public async Task<HttpResponseMessage> GetSpecific(Int64? idOrdenEntrega)
+        [Route("api/Clientes/{idCliente}/OrdenesEntrega/{shipperID}")]
+        public async Task<HttpResponseMessage> GetSpecific(string shipperID)
         {
             try
             {
-                if(idOrdenEntrega != null)
+                if(shipperID != null)
                 {
                     OrdenEntregaModel model = new OrdenEntregaModel();
-                    List<GetDetailsOrdenEntrega> data = await model.GetSpecific(idOrdenEntrega);
+                    List<GetDetailsOrdenEntrega> data = await model.GetSpecific(shipperID);
                     if(data.Count > 0)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, data);

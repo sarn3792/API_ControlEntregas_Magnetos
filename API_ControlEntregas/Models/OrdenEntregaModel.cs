@@ -33,7 +33,7 @@ namespace API_ControlEntregas.Models
             }
         }
 
-        public async Task<List<GetDetailsOrdenEntrega>> GetSpecific(Int64? idOrdenEntrega)
+        public async Task<List<GetDetailsOrdenEntrega>> GetSpecific(string shipperID)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace API_ControlEntregas.Models
                                             FROM OrdenesEntrega OC
                                             INNER JOIN Productos_OrdenesEntrega POC ON OC.IDOrdenEntrega = POC.IDOrdenEntrega
                                             INNER JOIN Productos PO ON PO.IDProducto = POC.IDProducto
-                                            WHERE OC.IDOrdenEntrega = {0}", idOrdenEntrega);
+                                            WHERE OC.ShipperID = '{0}'", shipperID);
                 DataBaseSettings db = new DataBaseSettings();
                 DataTable aux = await db.GetDataTable(query);
 
