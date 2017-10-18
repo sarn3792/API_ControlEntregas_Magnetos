@@ -15,12 +15,12 @@ namespace API_ControlEntregas.Controllers
     public class HistorialEntregasController : ApiController
     {
         [HttpPost]
-        [Route("api/OrdenesEntrega/{idOrdenEntrega}/HistorialEntrega")]
-        public async Task<HttpResponseMessage> Insert([FromUri] Int64? idOrdenEntrega)
+        [Route("api/OrdenesEntrega/{shipperID}/HistorialEntrega")]
+        public async Task<HttpResponseMessage> Insert([FromUri] string shipperID)
         {
             try
             {
-                if (idOrdenEntrega != null)
+                if (shipperID != null)
                 {
                     var result = await Request.Content.ReadAsMultipartAsync();
                     var requestJson = await result.Contents[0].ReadAsStringAsync();
@@ -29,7 +29,8 @@ namespace API_ControlEntregas.Controllers
                     {
 
                         HistorialEntregasModel model = new HistorialEntregasModel();
-                        data.idOrdenEntrega = idOrdenEntrega;
+                        OrdenEntregaModel ordenEntrega = new OrdenEntregaModel();
+                        data.idOrdenEntrega =  await ordenEntrega.GetID(shipperID);
                         Int64? idHistorialEntrega = await model.Insert(data);
 
                         if (data.fotos.Count > 0)

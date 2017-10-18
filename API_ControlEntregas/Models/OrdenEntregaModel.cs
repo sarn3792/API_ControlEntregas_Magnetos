@@ -109,6 +109,30 @@ namespace API_ControlEntregas.Models
                 throw ex;
             }
         }
+
+        public async Task<Int64?> GetID(string shipperID)
+        {
+            try
+            {
+                String query = String.Format(@"SELECT IDOrdenEntrega
+                                            FROM OrdenesEntrega
+                                            WHERE ShipperID = '{0}'", shipperID);
+                DataBaseSettings db = new DataBaseSettings();
+                DataTable aux = await db.GetDataTable(query);
+
+                if(aux.Rows.Count > 0)
+                {
+                    return Convert.ToInt64(aux.Rows[0]["IDOrdenEntrega"].ToString());
+                }
+
+                throw new Exception(String.Format("No se ha encontrado una orden de entrega correspondiente al shipperID {0}", shipperID));
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
     public class OrdenEntrega
